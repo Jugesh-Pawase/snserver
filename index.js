@@ -31,6 +31,14 @@ app.use(
     })
 );
 
+app.get("/test", (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: "Deployment is successful!",
+    });
+});
+
+
 app.use(
     fileUpload({
         useTempFiles: true,
