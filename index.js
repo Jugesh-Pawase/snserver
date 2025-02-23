@@ -30,14 +30,21 @@ const allowedOrigins = [
     "https://studynotion-green-kappa.vercel.app"
 ];
 
-app.use(
-    cors({
-        origin: allowedOrigins,  // Allow all specified origins
-        credentials: true,
-        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allow necessary methods
-        allowedHeaders: ["Content-Type", "Authorization"], // Allow necessary headers
-    })
-);
+app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader("Access-Control-Allow-Origin", origin);
+    }
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+
+    // Handle preflight requests
+    if (req.method === "OPTIONS") {
+        return res.sendStatus(200);
+    }
+    next();
+});
 
 app.get("/test", (req, res) => {
     res.status(200).json({
