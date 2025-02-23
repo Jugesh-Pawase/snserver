@@ -49,6 +49,13 @@ app.get("/test", (req, res) => {
     });
 });
 
+
+app.use(
+    fileUpload({
+        useTempFiles: true,
+        tempFileDir:"/tmp",
+    })
+)
 //cloudiary connection
 cloudinaryConnect();
 
