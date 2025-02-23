@@ -38,13 +38,23 @@ app.get("/test", (req, res) => {
     });
 });
 
+const allowedOrigins = [
+    "http://localhost:3000", 
+    "https://studynotion-green-kappa.vercel.app"
+];
 
 app.use(
-    fileUpload({
-        useTempFiles: true,
-        tempFileDir:"/tmp",
+    cors({
+        origin: function (origin, callback) {
+            if (!origin || allowedOrigins.includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error("Not allowed by CORS"));
+            }
+        },
+        credentials: true,
     })
-)
+);
 
 //cloudiary connection
 cloudinaryConnect();
