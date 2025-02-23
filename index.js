@@ -29,16 +29,13 @@ const allowedOrigins = [
     "http://localhost:3000", 
     "https://studynotion-green-kappa.vercel.app"
 ];
+
 app.use(
     cors({
-        origin: function (origin, callback) {
-            if (!origin || allowedOrigins.includes(origin)) {
-                callback(null, true);
-            } else {
-                callback(new Error("Not allowed by CORS"));
-            }
-        },
+        origin: allowedOrigins,  // Allow all specified origins
         credentials: true,
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allow necessary methods
+        allowedHeaders: ["Content-Type", "Authorization"], // Allow necessary headers
     })
 );
 
