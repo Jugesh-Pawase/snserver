@@ -24,25 +24,11 @@ database.Connect();
 //middlewares
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-    cors({
-        origin: "*",  //Frontend request
-        credentials: true,
-    })
-);
-
-app.get("/test", (req, res) => {
-    res.status(200).json({
-        success: true,
-        message: "Deployment is successful!",
-    });
-});
 
 const allowedOrigins = [
     "http://localhost:3000", 
     "https://studynotion-green-kappa.vercel.app"
 ];
-
 app.use(
     cors({
         origin: function (origin, callback) {
@@ -55,6 +41,13 @@ app.use(
         credentials: true,
     })
 );
+
+app.get("/test", (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: "Deployment is successful!",
+    });
+});
 
 //cloudiary connection
 cloudinaryConnect();
